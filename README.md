@@ -58,9 +58,9 @@ Once the code is compiled, you can deploy the contract by clicking on the "Deplo
 ### Interacting with the Contract
 Once the contract is deployed, you can interact with it by calling the transfer and getAmount functions:
 
-transfer Function: To transfer funds, enter the amount, tax, and sendTo parameters, then click on the "transact" button. The contract will perform necessary checks and either execute or revert the transaction based on the conditions.
+* transfer Function: To transfer funds, enter the amount, tax, and sendTo parameters, then click on the "transact" button. The contract will perform necessary checks and either execute or revert the transaction based on the conditions.
 
-getAmount Function: To check the current balance of the wallet, click on the getAmount function. The balance will be displayed without modifying the contract's state.
+* getAmount Function: To check the current balance of the wallet, click on the getAmount function. The balance will be displayed without modifying the contract's state.
 
 ## Authors
 Harsh Gupta  

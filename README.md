@@ -50,12 +50,12 @@ contract Wallet {
 }
 
 ```
-## Compiling and Deploying the Code
+### Compiling and Deploying the Code
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile Wallet.sol" button.
 
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "Wallet" contract from the dropdown menu, and then click on the "Deploy" button.
 
-## Interacting with the Contract
+### Interacting with the Contract
 Once the contract is deployed, you can interact with it by calling the transfer and getAmount functions:
 
 transfer Function: To transfer funds, enter the amount, tax, and sendTo parameters, then click on the "transact" button. The contract will perform necessary checks and either execute or revert the transaction based on the conditions.

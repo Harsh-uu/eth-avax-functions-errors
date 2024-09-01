@@ -1,33 +1,67 @@
-# Functions and Errors handling contract
+# Wallet Contract - Functions and Error Handling
+This Solidity program is a simple "Wallet" contract that demonstrates the use of error handling (revert, require, assert) in Solidity. The purpose of this program is to showcase how error handling and validation checks are implemented within a smart contract on the Ethereum blockchain.
 
-This Solidity program is a simple "Fund Transaction" program that demonstrates the knowledge of error handeling(revert, require, assert) functionality in Solidity programming language.
+## Description
+This program is a smart contract written in Solidity that functions as a basic wallet. It allows the owner to manage a balance and transfer funds to a recipient address with a specified tax. The contract utilizes revert, require, and assert statements for error handling to ensure proper and secure transactions. This program serves as a practical example for developers to understand error handling and secure programming practices in Solidity.
 
-# Description
+## Getting Started
+### Executing Program
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at Remix IDE.
 
-This is the program to demosatrate the use of revert, require, assert in solidity.
+Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., Wallet.sol). Copy and paste the following code into the file:
 
-The contract is named wallet and is specified to be licensed under the MIT license. The contract uses a Solidity version equal to or greater than 0.8.18.
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
-### Contract Variables:
+contract Wallet {
+    uint public totalAmount;  // Stores the total balance of the wallet
+    address public owner;     // Stores the address of the owner of the wallet
 
-totalAmount: A public unsigned integer variable that represents the total balance of the wallet. It stores the amount of funds available in the wallet. owner: An address variable that represents the owner of the wallet. It is set to the address of the contract deployer.
+    // Constructor initializes the contract with the specified total amount and sets the owner
+    constructor(uint _totalAmount) {
+        totalAmount = _totalAmount;
+        owner = msg.sender;  // Sets the deployer as the owner of the contract
+    }
 
-### Constructor:
+    // Function to transfer funds from the wallet to a specified recipient
+    function transfer(uint amount, uint tax, address sendTo) public {
+        uint amountToBeDeducted = amount + tax;  // Calculate the total amount to be deducted (amount + tax)
+        
+        // Revert the transaction if the tax is greater than or equal to the amount
+        if (tax >= amount) {
+            revert("Tax should be less than amount to be transferred");
+        }
+        
+        // Ensure the total balance is sufficient for the transfer
+        require(amountToBeDeducted <= totalAmount, "Amount + tax should be less than or equal to current balance");
+        
+        // Ensure the owner is not transferring to themselves
+        assert(owner != sendTo);
+        
+        // Deduct the total amount (amount + tax) from the wallet's total balance
+        totalAmount -= amountToBeDeducted;
+    }
 
-The constructor is defined with a single parameter uint \_totalAmount. When the contract is deployed, the \_totalAmount value is passed as an argument. Inside the constructor, the totalAmount variable is initialized with the provided \_totalAmount value. The owner variable is set to the address of the contract deployer, accessed using msg.sender.
+    // Getter function to retrieve the current total balance of the wallet
+    function getAmount() public view returns (uint) {
+        return totalAmount;
+    }
+}
 
-### Function: transfer
+```
+## Compiling and Deploying the Code
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile Wallet.sol" button.
 
-This function is used to transfer funds from the wallet to a specified recipient address (sendTo).
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "Wallet" contract from the dropdown menu, and then click on the "Deploy" button.
 
-It takes three parameters: amount: The amount of funds to be transferred. tax: The tax or fee to be deducted from the transferred amount. sendTo: The address to which the funds will be transferred.
+## Interacting with the Contract
+Once the contract is deployed, you can interact with it by calling the transfer and getAmount functions:
 
-Within the function, the amount and tax are added together to calculate amountTOBeDeducted, representing the total amount to be deducted from the totalAmount balance. The totalAmount is decreased by amountTOBeDeducted to reflect the deduction from the wallet balance. The function includes a check to ensure that the tax value is less than the amount value, and if not, it reverts the transaction with an error message. It also includes a requirement that the amountTOBeDeducted value is less than the current totalAmount, ensuring that the wallet has sufficient funds to cover the transfer. Finally, an assert statement is used to verify that the owner address is not the same as the sendTo address. This ensures that the owner cannot transfer funds to themselves.
+transfer Function: To transfer funds, enter the amount, tax, and sendTo parameters, then click on the "transact" button. The contract will perform necessary checks and either execute or revert the transaction based on the conditions.
 
-### Function: getamount
-
-This function is a simple getter function that returns the current value of totalAmount. It is marked as view to indicate that it does not modify the contract's state. Overall, this contract provides a basic functionality of a wallet with a transfer method that deducts a specified tax from the transferred amount and performs validation checks.
+getAmount Function: To check the current balance of the wallet, click on the getAmount function. The balance will be displayed without modifying the contract's state.
 
 ## Authors
-
-Harsh Gupta
+Harsh Gupta  
+[@harsh-uu](https://github.com/harsh-uu)
